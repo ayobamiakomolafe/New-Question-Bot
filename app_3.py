@@ -1,3 +1,8 @@
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
+
 from langchain_community.vectorstores import FAISS
 from langchain_community.embeddings.fastembed import FastEmbedEmbeddings
 from langchain_groq import ChatGroq
@@ -10,14 +15,11 @@ import os
 import time
 import streamlit as st
 from streamlit_chat import message
-load_dotenv()
 
 
-api_key_1 = ""
-api_key_2 = ""
-api_key = ""
-
-os.environ["OPENAI_API_KEY"] = api_key
+api_key_1 = st.secrets["API_KEY_1"]
+api_key_2 = st.secrets["API_KEY_2"]
+os.environ["OPENAI_API_KEY"] = st.secrets["API_KEY_3"]
 
 embeddings = FastEmbedEmbeddings(model_name="BAAI/bge-base-en-v1.5")
 
