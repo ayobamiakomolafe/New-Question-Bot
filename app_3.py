@@ -164,7 +164,7 @@ def  main():
     if page  ==  "DEEPSEEK":
         # Initialize chat history
         if "messages_deepseek" not in st.session_state:
-            st.session_state_deepseek.messages = []
+            st.session_state.messages_deepseek = []
 
         # Display chat messages from history on app rerun
         for message in st.session_state.messages_deepseek:
