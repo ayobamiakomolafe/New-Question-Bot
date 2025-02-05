@@ -86,7 +86,7 @@ def response_generate_deepseek(query_text):
     except:
         model = ChatGroq(temperature=0.5, model_name="DeepSeek-R1-Distill-Llama-70b", api_key = api_key_2 )
         response_text = model.predict(prompt)
-        response_text = response_text.split(" </think>>")[1]
+        response_text = response_text.split(" </think>")[1]
         return response_text
 
 
