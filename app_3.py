@@ -81,10 +81,12 @@ def response_generate_deepseek(query_text):
     try:
         model = ChatGroq(temperature=0.5, model_name="DeepSeek-R1-Distill-Llama-70b", api_key = api_key_1 )
         response_text = model.predict(prompt)
+        response_text = response_text.split(" </think>>")[1]
         return response_text
     except:
         model = ChatGroq(temperature=0.5, model_name="DeepSeek-R1-Distill-Llama-70b", api_key = api_key_2 )
         response_text = model.predict(prompt)
+        response_text = response_text.split(" </think>>")[1]
         return response_text
 
 
@@ -99,18 +101,18 @@ def  main():
 
     if page  ==  "OPEN AI":
         # Initialize chat history
-        if "messages" not in st.session_state:
-            st.session_state.messages = []
+        if "messages_openai" not in st.session_state:
+            st.session_state.messages_openai = []
 
         # Display chat messages from history on app rerun
-        for message in st.session_state.messages:
+        for message in st.session_state.messages_openai:
             with st.chat_message(message["role"]):
                 st.markdown(message["content"])
 
         # Accept user input
         if prompt := st.chat_input("Question?"):
             # Add user message to chat history
-            st.session_state.messages.append({"role": "user", "content": prompt})
+            st.session_state.messages_openai.append({"role": "user", "content": prompt})
             # Display user message in chat message container
             with st.chat_message("user"):
                 st.markdown(prompt)
@@ -125,23 +127,23 @@ def  main():
                 
 
             # Add assistant response to chat history
-            st.session_state.messages.append({"role": "assistant", "content": output})
+            st.session_state.messages_openai.append({"role": "assistant", "content": output})
         
     
     if page  ==  "LLAMA":
         # Initialize chat history
-        if "messages" not in st.session_state:
-            st.session_state.messages = []
+        if "messages_llama" not in st.session_state:
+            st.session_state.messages_llama = []
 
         # Display chat messages from history on app rerun
-        for message in st.session_state.messages:
+        for message in st.session_state.messages_llama:
             with st.chat_message(message["role"]):
                 st.markdown(message["content"])
 
         # Accept user input
         if prompt := st.chat_input("Question?"):
             # Add user message to chat history
-            st.session_state.messages.append({"role": "user", "content": prompt})
+            st.session_state.messages_llama.append({"role": "user", "content": prompt})
             # Display user message in chat message container
             with st.chat_message("user"):
                 st.markdown(prompt)
@@ -156,23 +158,23 @@ def  main():
                 
 
             # Add assistant response to chat history
-            st.session_state.messages.append({"role": "assistant", "content": output})
+            st.session_state.messages_llama.append({"role": "assistant", "content": output})
 
     
     if page  ==  "DEEPSEEK":
         # Initialize chat history
-        if "messages" not in st.session_state:
-            st.session_state.messages = []
+        if "messages_deepseek" not in st.session_state:
+            st.session_state_deepseek.messages = []
 
         # Display chat messages from history on app rerun
-        for message in st.session_state.messages:
+        for message in st.session_state.messages_deepseek:
             with st.chat_message(message["role"]):
                 st.markdown(message["content"])
 
         # Accept user input
         if prompt := st.chat_input("Question?"):
             # Add user message to chat history
-            st.session_state.messages.append({"role": "user", "content": prompt})
+            st.session_state.messages_deepseek.append({"role": "user", "content": prompt})
             # Display user message in chat message container
             with st.chat_message("user"):
                 st.markdown(prompt)
@@ -187,7 +189,7 @@ def  main():
                 
 
             # Add assistant response to chat history
-            st.session_state.messages.append({"role": "assistant", "content": output})
+            st.session_state.messages_deepseek.append({"role": "assistant", "content": output})
 
 from streamlit.web import cli as stcli
 from streamlit import runtime
